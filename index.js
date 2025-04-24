@@ -64,7 +64,7 @@ const upload = multer({ dest: 'uploads/' });
 
 app.post('/upload', upload.single('file'), async (req, res) => {
     const file = req.file;
-    const folderPath = req.folderPath;
+    const folderPath = req.body.folderPath;
     if (!file) {
         return res.status(400).send('No file uploaded.');
     }

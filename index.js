@@ -102,7 +102,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
 app.post('/createcontainer',async (req, res) => {
     try{
-        const containerName = 'testContainer';
+        const containerName = 'parentcontainer';
 
         console.log('\nCreating container...');
         console.log('\t', containerName);
@@ -114,8 +114,13 @@ app.post('/createcontainer',async (req, res) => {
         console.log(
           `Container was created successfully.\n\trequestId:${createContainerResponse.requestId}\n\tURL: ${containerClient.url}`
         );
+        res.json({
+            requestId: createContainerResponse.requestId,
+            Status: "Container created successfully",
+            Container_URL: `${containerClient.url}`  
+        })
     } catch (error) {
-        res.status(500).send('Error Creating Container');
+        res.status(500).send('Error Creating Container'+error.message);
     }
     
 })

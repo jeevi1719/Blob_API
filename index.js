@@ -100,6 +100,27 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     }
 });
 
+app.post('/createcontainer',async (req, res) => {
+    try{
+        const containerName = 'testContainer';
+
+        console.log('\nCreating container...');
+        console.log('\t', containerName);
+        
+        // Get a reference to a container
+        const containerClient = blobServiceClient.getContainerClient(containerName);
+        // Create the container
+        const createContainerResponse = await containerClient.create();
+        console.log(
+          `Container was created successfully.\n\trequestId:${createContainerResponse.requestId}\n\tURL: ${containerClient.url}`
+        );
+    } catch (error) {
+        res.status(500).send('Error Creating Container');
+    }
+    
+})
+
+
 app.get('/blob', async (req, res) => {
   // module.exports = async function (context, req) {
       // replace with your container name

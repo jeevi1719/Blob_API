@@ -64,7 +64,7 @@ const upload = multer({ dest: 'uploads/' });
 
 app.post('/upload', upload.single('file'), async (req, res) => {
     const file = req.file;
-
+    const folderPath = req.body.folderPath;
     if (!file) {
         return res.status(400).send('No file uploaded.');
     }
@@ -75,8 +75,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
         // Get the file path and name
         const filePath = file.path;
-        const fileName = file.originalname;
-
+        const fileName = folderPath+'/'+file.originalname;
         // Create the blob client
         const blockBlobClient = containerClient.getBlockBlobClient(fileName);
 
@@ -92,7 +91,8 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         res.status(200).json({
             // `"File uploaded successfully". Blob URL: ${blockBlobClient.url}`
             Status: "File uploaded successfully",
-            Blob_URL: `${blockBlobClient.url}`  
+            Blob_URL: `${blockBlobClient.url}`,
+            Preview_URL: `https://blob-api.onrender.com/preview/${file.originalname}`
      });
     } catch (error) {
         console.error('Error uploading file:', error.message);

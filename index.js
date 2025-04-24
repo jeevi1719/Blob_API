@@ -75,7 +75,11 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
         // Get the file path and name
         const filePath = file.path;
-        const fileName = folderPath+'/'+file.originalname;
+        const fileName = file.originalname;
+        if(folderPath){
+            fileName = folderPath+'/'+file.originalname;
+        }
+        
         // Create the blob client
         const blockBlobClient = containerClient.getBlockBlobClient(fileName);
 

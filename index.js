@@ -93,7 +93,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
             Status: "File uploaded successfully",
             Blob_URL: `${blockBlobClient.url}`,
             Preview_URL: `https://blob-api.onrender.com/preview/${file.originalname}`,
-            json:folderPath
+            json:'testfolder>>>'+folderPath
      });
     } catch (error) {
         console.error('Error uploading file:', error.message);

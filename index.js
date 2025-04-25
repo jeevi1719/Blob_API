@@ -96,7 +96,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
             // `"File uploaded successfully". Blob URL: ${blockBlobClient.url}`
             Status: "File uploaded successfully",
             Blob_URL: `${blockBlobClient.url}`,
-            Preview_URL: `https://blob-api.onrender.com/preview/${file.originalname}`,
+            Preview_URL: `https://azureblob-cfe6g7g5gfcxb5ek.canadacentral-01.azurewebsites.net/preview/${file.originalname}`,
             json:'testfolder>>>'+folderPath
      });
     } catch (error) {

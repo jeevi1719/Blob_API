@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const multer = require('multer');
+const { FORMERR } = require('dns');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -97,7 +98,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
             Status: "File uploaded successfully",
             Blob_URL: `${blockBlobClient.url}`,
             Preview_URL: `https://azureblob-cfe6g7g5gfcxb5ek.canadacentral-01.azurewebsites.net/preview/${file.originalname}`,
-            json:'testfolder>>>'+folderPath
+            Folder_Path: folderPath
      });
     } catch (error) {
         console.error('Error uploading file:', error.message);

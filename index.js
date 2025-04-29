@@ -9,7 +9,7 @@ const { FORMERR } = require('dns');
 
 const app = express();
 const port = process.env.PORT || 3000;
-
+const AUTH_TOKEN = 'Test123';
 // // Environment variables (make sure to set these in your environment)
 // const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME;
 // const accountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY;
@@ -165,10 +165,16 @@ app.get('/blob', async (req, res) => {
   // };
   })
 
-  app.get('/preview/:blobName', async (req, res) => {
+  app.post('/preview/:blobName', async (req, res) => {
     const blobName = req.params.blobName;
 
     try {
+        console.log(req.headers);
+        console.log(req.headers['authorization']);
+        let token = req.headers['authorization'];   
+        if (!token || token !== AUTH_TOKEN) {
+            return res.status(401).send('Authorization token is required'); 
+        }
         const containerClient = blobServiceClient.getContainerClient(containerName1);
         const blobClient = containerClient.getBlobClient(blobName);
         const downloadBlockBlobResponse = await blobClient.download(0);
@@ -179,6 +185,7 @@ app.get('/blob', async (req, res) => {
 
         // Pipe the blob content to the response
         downloadBlockBlobResponse.readableStreamBody.pipe(res);
+
     } catch (error) {
         console.error('Error downloading blob:', error.message);
         res.status(500).send('Error retrieving blob');

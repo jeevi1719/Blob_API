@@ -165,12 +165,10 @@ app.get('/blob', async (req, res) => {
   // };
   })
 
-  app.post('/preview/:blobName', async (req, res) => {
+  app.get('/preview/:blobName', async (req, res) => {
     const blobName = req.params.blobName;
 
-    try {
-        console.log(req.headers);
-        console.log(req.headers['authorization']);
+    try {   
         let token = req.headers['authorization'];   
         if (!token || token !== AUTH_TOKEN) {
             return res.status(401).send('Authorization token is required'); 
